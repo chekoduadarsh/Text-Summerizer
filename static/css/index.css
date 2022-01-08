@@ -1,0 +1,13 @@
+.vl {
+    border-left: 6px solid green;
+    height: 500px;
+  }
+
+th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 80px;
+  }
+  h1{
+    text-align:center;
+  }

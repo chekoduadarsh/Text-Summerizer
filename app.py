@@ -3,8 +3,11 @@ import pickle
 import numpy as np
 import tensorflow as tf
 from keras.preprocessing.sequence import pad_sequences
+from flask_bootstrap import Bootstrap
+
 
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
 
 with open('x_tokenizer.pickle', 'rb') as handle:
     x_tokenizer = pickle.load(handle)
@@ -67,21 +70,26 @@ def decode_sequence(input_seq):
 
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        x_tr = [request.form['text']]
+
+        x_tr_seq    =   x_tokenizer.texts_to_sequences(x_tr) 
+
+        #padding zero upto maximum length
+        x_tr    =   pad_sequences(x_tr_seq,  maxlen=max_text_len, padding='post')
+
+        summary = decode_sequence(x_tr[0].reshape(1,max_text_len))
+        return render_template('index.html', summary=summary)
+
+    return render_template('index.html', summary="Your text summary will generate here!!")
 
 @app.route('/submit', methods=['POST'])
 def submit():
 
-    x_tr = [request.form['text']]
 
-    x_tr_seq    =   x_tokenizer.texts_to_sequences(x_tr) 
-
-    #padding zero upto maximum length
-    x_tr    =   pad_sequences(x_tr_seq,  maxlen=max_text_len, padding='post')
-
-    return 'Your Text Summery entered: {}'.format(decode_sequence(x_tr[0].reshape(1,max_text_len)))
+    return 'Your Text Summery entered: {}'.format()
 
 
 if __name__ == '__main__':
