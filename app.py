@@ -16,8 +16,6 @@ with open('y_tokenizer.pickle', 'rb') as handle:
 max_text_len=100
 max_summary_len=15
 
-model = tf.keras.models.load_model("my_model.h5")
-
 reverse_target_word_index=y_tokenizer.index_word
 reverse_source_word_index=x_tokenizer.index_word
 target_word_index=y_tokenizer.word_index
