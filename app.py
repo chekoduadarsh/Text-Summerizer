@@ -9,10 +9,10 @@ from flask_bootstrap import Bootstrap
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
-with open('x_tokenizer.pickle', 'rb') as handle:
+with open('model/x_tokenizer.pickle', 'rb') as handle:
     x_tokenizer = pickle.load(handle)
 
-with open('y_tokenizer.pickle', 'rb') as handle:
+with open('model/y_tokenizer.pickle', 'rb') as handle:
     y_tokenizer = pickle.load(handle)
 
 
@@ -25,9 +25,9 @@ target_word_index=y_tokenizer.word_index
 
 
 # Encode the input sequence to get the feature vector
-encoder_model = tf.keras.models.load_model("encoder_model.h5")
+encoder_model = tf.keras.models.load_model("model/encoder_model.h5")
 # Final decoder model
-decoder_model = tf.keras.models.load_model("decoder_model.h5")
+decoder_model = tf.keras.models.load_model("model/decoder_model.h5")
 
 
 
